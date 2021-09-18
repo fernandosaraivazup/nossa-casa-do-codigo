@@ -4,21 +4,30 @@ import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
-import io.micronaut.http.annotation.Status
-import io.micronaut.validation.Validated
-import org.slf4j.LoggerFactory
-import javax.validation.Valid
+import jakarta.inject.Inject
 
-@Validated
+import org.slf4j.LoggerFactory
+import javax.validation.ConstraintViolationException
+import javax.validation.Validator
+
 @Controller("/api/alunos")
 class CadastroAlunoController {
+
+    @Inject
+    lateinit var validator: Validator
 
     var logger= LoggerFactory.getLogger(this.javaClass)
 
     @Post
-    @Status(HttpStatus.OK)
-    fun cadastra(@Body @Valid request: NovoAlunoRequest) {
+    fun cadastra(@Body request: NovoAlunoRequest): HttpStatus {
+        val constraintViolations = validator.validate(request)
+
+        if(constraintViolations.isNotEmpty()) {
+            throw ConstraintViolationException(constraintViolations)
+        }
+
         logger.info("Novo ALUNO cadastrado: $request")
+        return HttpStatus.OK
     }
 
 }
