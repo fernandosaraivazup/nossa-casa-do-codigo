@@ -14,8 +14,9 @@ class CadastroAutorController {
 
     @Post
     @Status(HttpStatus.CREATED)
-    fun cadastra(@Body request: NovoAutorRequest) {
+    fun cadastra(@Body request: NovoAutorRequest): NovoAutorRequest {
         logger.info("Novo AUTOR cadastrado: $request")
+        return request
     }
 
 }
