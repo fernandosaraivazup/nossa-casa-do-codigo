@@ -20,7 +20,6 @@ data class ItemDePedidoRequest(
     val quantidade: Int
 ) {
     fun getTotal(): BigDecimal {
-        //iterar pela lista de items somando o valor total (preco * quantidade) de cada item do pedido
         return preco * BigDecimal(quantidade)
     }
 }

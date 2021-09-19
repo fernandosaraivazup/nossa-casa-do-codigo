@@ -18,8 +18,9 @@ data class NovoPedidoRequest(
     val itens: List<ItemDePedidoRequest>
 ) {
     fun paraPedido(): Pedido {
+        val total: BigDecimal = itens.sumOf { it.getTotal() }
         return Pedido(
-            Cliente(nome, email), BigDecimal(1000), itens.map { ItemDePedido(it.codigo, it.preco, it.quantidade) }
+            Cliente(nome, email), total, itens.map { ItemDePedido(it.codigo, it.preco, it.quantidade) }
         )
     }
 }
