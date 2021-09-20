@@ -1,10 +1,10 @@
 package br.com.zup.cadastroveiculo
 
+import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
-import io.micronaut.http.annotation.Status
 import io.micronaut.http.exceptions.HttpStatusException
 import io.micronaut.validation.Validated
 import org.slf4j.LoggerFactory
@@ -17,8 +17,7 @@ class NovoCarroController(val carroRepository: CarroRepository) {
     var logger = LoggerFactory.getLogger(this.javaClass)
 
     @Post
-    @Status(HttpStatus.CREATED)
-    fun cadastraCarro(@Body @Valid request: NovoCarroRequest): NovoCarroRequest {
+    fun cadastraCarro(@Body @Valid request: NovoCarroRequest): HttpResponse<NovoCarroResponse> {
         val novoCarro = request.paraCarro()
 
         if(novoCarro.existeCarroComPlacaInformada(carroRepository)) {
@@ -27,7 +26,9 @@ class NovoCarroController(val carroRepository: CarroRepository) {
 
         carroRepository.save(novoCarro)
 
-        logger.info("Novo CARRO cadastrado: $request")
-        return request
+        val response: NovoCarroResponse = NovoCarroResponse(novoCarro)
+        logger.info("Novo CARRO cadastrado: ${response}")
+
+        return HttpResponse.created(response)
     }
 }
