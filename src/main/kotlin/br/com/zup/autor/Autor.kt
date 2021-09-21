@@ -23,4 +23,8 @@ class Autor(
     @PastOrPresent
     @Column(name = "created_at", nullable=false, updatable=false)
     val criadoEm: LocalDateTime = LocalDateTime.now()
+
+    override fun toString(): String {
+        return "Autor(nome='$nome', email='$email', id=$id, criadoEm=$criadoEm)"
+    }
 }

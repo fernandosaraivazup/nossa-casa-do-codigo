@@ -42,7 +42,22 @@ class CadastroAutorController(val autorRepository: AutorRepository) {
         autor.email = request.email
 
         autorRepository.update(autor)
+        logger.info("AUTOR atualizado: $autor")
 
         return HttpResponse.ok(NovoAutorResponse(autor))
+    }
+
+    @Delete("/{id}")
+    fun deleta(@PathVariable id: Long): HttpResponse<Any> {
+        val autorBuscado = autorRepository.findById(id)
+
+        if(autorBuscado.isEmpty) {
+            return HttpResponse.notFound()
+        }
+
+        autorRepository.deleteById(id)
+        logger.info("AUTOR removido: ${autorBuscado.get()}")
+
+        return HttpResponse.ok()
     }
 }
