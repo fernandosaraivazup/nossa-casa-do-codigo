@@ -1,18 +1,26 @@
 package br.com.zup.autor
 
+import java.time.LocalDateTime
 import javax.persistence.*
+import javax.validation.constraints.NotNull
+import javax.validation.constraints.PastOrPresent
 
 @Entity
 @Table(name = "tb_authors")
 class Autor(
     @Column(name = "name")
-    val nome: String,
+    var nome: String,
 
     @Column(name = "email")
-    val email: String
+    var email: String
 ) {
     @Id
     @GeneratedValue
     @Column(name = "id")
     var id: Long? = null
+
+    @NotNull
+    @PastOrPresent
+    @Column(name = "created_at", nullable=false, updatable=false)
+    val criadoEm: LocalDateTime = LocalDateTime.now()
 }
