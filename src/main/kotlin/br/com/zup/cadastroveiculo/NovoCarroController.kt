@@ -6,6 +6,7 @@ import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.exceptions.HttpStatusException
+import io.micronaut.http.uri.UriBuilder
 import io.micronaut.validation.Validated
 import org.slf4j.LoggerFactory
 import javax.validation.Valid
@@ -29,6 +30,10 @@ class NovoCarroController(val carroRepository: CarroRepository) {
         val response: NovoCarroResponse = NovoCarroResponse(novoCarro)
         logger.info("Novo CARRO cadastrado: ${response}")
 
-        return HttpResponse.created(response)
+        var uri = UriBuilder.of("/api/carros/{id}")
+                    .expand(mutableMapOf(Pair("id", novoCarro.id)))
+
+        return HttpResponse.created(uri)
+
     }
 }
