@@ -13,7 +13,7 @@ import javax.validation.Valid
 @Controller("/api/transacoes")
 class TransacaoController(val transacaoRepository: TransacaoRepository) {
 
-    var logger = LoggerFactory.getLogger(this.javaClass)
+    val logger = LoggerFactory.getLogger(this.javaClass)
 
     @Post
     fun cadastraTransacao(@Body @Valid request: NovaTransacaoRequest): HttpResponse<NovaTransacaoResponse> {

@@ -5,6 +5,7 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
+@Table(name = "tb_nf")
 class NotaFiscal(
     val numero: String,
     val serie: String,

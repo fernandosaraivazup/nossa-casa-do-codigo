@@ -9,7 +9,4 @@ data class ItemDeNotaResponse(
     val quantidade: Int
 ) {
 
-    override fun toString(): String {
-        return "ItemDeNotaResponse(valor=$valor, quantidade=$quantidade)"
-    }
 }

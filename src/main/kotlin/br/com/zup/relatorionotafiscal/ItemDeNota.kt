@@ -5,8 +5,10 @@ import java.time.LocalDateTime
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
+import javax.persistence.Table
 
 @Entity
+@Table(name = "tb_nf_item")
 class ItemDeNota(
     val valor: BigDecimal,
     val quantidade: Int
